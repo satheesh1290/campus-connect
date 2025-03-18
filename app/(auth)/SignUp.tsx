@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   Text,
@@ -19,6 +19,8 @@ import { auth } from "@/configs/FirebaseConfig";
 import { upload } from "cloudinary-react-native";
 import { cld, options } from "@/configs/CloudinaryConfig";
 import axios from "axios";
+import { router } from "expo-router";
+import { AuthContext } from "@/context/AuthContext";
 
 function SignUp() {
   const [fullName, setFullName] = useState<string | undefined>("");
@@ -26,6 +28,7 @@ function SignUp() {
   const [password, setPassword] = useState<string | undefined>("");
   const [profileImage, setProfileImage] = useState<string | undefined>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const { user, setUser } = useContext(AuthContext);
 
   const onsubmit = () => {
     setLoading(true);
@@ -51,13 +54,19 @@ function SignUp() {
                 {
                   name: fullName,
                   email: email,
-                  image: response?.url,
+                  image: response?.url ?? "",
                 }
               );
+              setUser({
+                name: fullName,
+                email: email,
+                image: response?.url ?? "",
+              });
+              router.push("/landing");
+              setLoading(false);
             }
           },
         });
-        setLoading(false);
       })
       .catch((err) => {
         const errMsg = err.message;
