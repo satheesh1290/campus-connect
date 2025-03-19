@@ -54,7 +54,7 @@ function SignUp() {
                 {
                   name: fullName,
                   email: email,
-                  image: response?.url ?? "",
+                  image: response?.url,
                 }
               );
               setUser({
@@ -81,7 +81,7 @@ function SignUp() {
       mediaTypes: ["images"],
       allowsEditing: true,
       aspect: [4, 4],
-      quality: 1,
+      quality: 0.5,
     });
 
     console.log(result);

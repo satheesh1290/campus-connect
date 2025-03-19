@@ -29,7 +29,7 @@ function SignIn() {
           const result = await axios.get(
             process.env.EXPO_PUBLIC_HOST_URL + "user?email=" + resp.user.email
           );
-          // console.log(result.data);
+          console.log(result.data);
           setUser(result.data);
         }
         setLoading(false);
